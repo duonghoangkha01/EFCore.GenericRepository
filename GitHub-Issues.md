@@ -130,10 +130,10 @@ public abstract class EntityBase<K>
 Create the interface for entities that support soft delete.
 
 **Tasks**:
-- [ ] Create `ISoftDeletable` interface
-- [ ] Add `IsDeleted` property
-- [ ] Add `DeletedAt` property
-- [ ] Add comprehensive XML documentation
+- [x] Create `ISoftDeletable` interface
+- [x] Add `IsDeleted` property
+- [x] Add `DeletedAt` property
+- [x] Add comprehensive XML documentation
 
 **Code**:
 ```csharp
