@@ -14,7 +14,7 @@
 
 **Last Updated**: 2025-11-26
 **Current Status**: 🟢 **IN PROGRESS** - Initial setup completed
-**Overall Progress**: 12.5% (4/32 issues completed)
+**Overall Progress**: 15.6% (5/32 issues completed)
 
 ### ✅ Completed Tasks
 - [x] Create detailed implementation plan
@@ -24,10 +24,10 @@
 - [x] Create GitHub Issues task list
 
 ### 🔄 Current Task
-**Task**: Implementing Issue #5: Implement EntityBase<K> class
+**Task**: Implementing Issue #6: Implement ISoftDeletable interface
 **Status**: Pending user decision
 **Blockers**: None
-**Next Action**: Start implementing Issue #5
+**Next Action**: Start implementing Issue #6
 
 ### 📋 Next Steps (In Order)
 1. [x] Create GitHub repository: `EFCore.GenericRepository`
@@ -58,6 +58,10 @@
 - Completed Issue #3: Create README.md with initial documentation
 - Completed Issue #4: Set up CI/CD pipeline (GitHub Actions)
 - **Status**: Initial setup complete, proceeding to core implementation
+
+#### Session 3 - 2025-11-26 - Core Entities
+- Completed Issue #5: Implement EntityBase<K> class
+- **Status**: Core entity base class implemented and tested.
 
 ---
 
