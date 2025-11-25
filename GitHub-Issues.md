@@ -169,12 +169,12 @@ public interface ISoftDeletable
 Create the result type for paginated queries with metadata.
 
 **Tasks**:
-- [ ] Create `PagedResult<T>` class
-- [ ] Add properties: Items, TotalCount, PageNumber, PageSize, TotalPages
-- [ ] Add calculated properties: HasPreviousPage, HasNextPage
-- [ ] Implement calculation logic for TotalPages
-- [ ] Add comprehensive XML documentation
-- [ ] Create unit tests
+- [x] Create `PagedResult<T>` class
+- [x] Add properties: Items, TotalCount, PageNumber, PageSize, TotalPages
+- [x] Add calculated properties: HasPreviousPage, HasNextPage
+- [x] Implement calculation logic for TotalPages
+- [x] Add comprehensive XML documentation
+- [x] Create unit tests
 
 **Acceptance Criteria**:
 - All properties implemented correctly
