@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+
+    <!-- NuGet Package Metadata -->
+    <PackageId>EFCore.GenericRepository</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>duonghoangkha01</Authors>
+    <Company>duonghoangkha01</Company>
+    <Product>EFCore.GenericRepository</Product>
+    <Description>Generic Repository pattern implementation with Unit of Work for Entity Framework Core 8.0. Provides reusable base repository with CRUD operations, soft delete support, and query capabilities.</Description>
+    <PackageTags>csharp;dotnet;entity-framework-core;repository-pattern;unit-of-work;generic-repository;efcore;soft-delete;net6;efcore8</PackageTags>
+    <PackageProjectUrl>https://github.com/duonghoangkha01/EFCore.GenericRepository</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/duonghoangkha01/EFCore.GenericRepository</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.0" />
+  </ItemGroup>
+
+</Project>
