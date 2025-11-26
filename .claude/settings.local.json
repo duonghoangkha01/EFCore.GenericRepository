@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(gemini models list:*)",
-      "Bash(gemini:*)"
+      "Bash(gemini:*)",
+      "Bash(dotnet build:*)"
     ],
     "deny": [],
     "ask": []

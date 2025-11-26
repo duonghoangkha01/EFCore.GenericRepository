@@ -260,13 +260,13 @@ Create comprehensive unit tests for RepositoryQueryBase.
 Define the interface for full CRUD repository operations.
 
 **Tasks**:
-- [ ] Extend IRepositoryQueryBase
-- [ ] Define Add methods (single and range)
-- [ ] Define Update methods (single and range)
-- [ ] Define Delete methods (soft delete by default)
-- [ ] Define HardDelete methods (permanent deletion)
-- [ ] Define Restore methods (for soft-deleted entities)
-- [ ] Add comprehensive XML documentation
+- [x] Extend IRepositoryQueryBase
+- [x] Define Add methods (single and range)
+- [x] Define Update methods (single and range)
+- [x] Define Delete methods (soft delete by default)
+- [x] Define HardDelete methods (permanent deletion)
+- [x] Define Restore methods (for soft-deleted entities)
+- [x] Add comprehensive XML documentation
 
 **Acceptance Criteria**:
 - All method signatures defined
