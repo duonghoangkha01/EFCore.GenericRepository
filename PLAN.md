@@ -14,7 +14,7 @@
 
 **Last Updated**: 2025-11-26
 **Current Status**: 🟢 **IN PROGRESS** - Core implementation in progress
-**Overall Progress**: 40.625% (13/32 issues completed)
+**Overall Progress**: 43.75% (14/32 issues completed)
 
 ### ✅ Completed Tasks
 - [x] Create detailed implementation plan
@@ -24,10 +24,10 @@
 - [x] Create GitHub Issues task list
 
 ### 🔄 Current Task
-**Task**: Implementing Issue #14: Define IUnitOfWork interface
+**Task**: Implementing Issue #15: Implement UnitOfWork<TContext> class
 **Status**: Ready to start
 **Blockers**: None
-**Next Action**: Define the Unit of Work interface for transaction coordination and repository management
+**Next Action**: Implement the Unit of Work pattern for coordinating repositories with caching, transactions, and disposal
 
 ### 📋 Next Steps (In Order)
 1. [x] Create GitHub repository: `EFCore.GenericRepository`
@@ -93,6 +93,16 @@
 - Completed Issue #13: Add unit tests for RepositoryBase CRUD operations
 - Created comprehensive test suite with 26 test methods
 - **Status**: All tests passing (26/26) - 100% success rate. Verified soft delete, hard delete, restore, and edge cases.
+
+#### Session 11 - 2025-11-26 - Unit of Work Interface
+- Completed Issue #14: Define IUnitOfWork interface
+- Created `src/EFCore.GenericRepository/UnitOfWork/IUnitOfWork.cs` with comprehensive interface definition
+- Defined Repository<T, K>() method for repository access
+- Defined SaveChanges methods (sync and async)
+- Defined transaction methods: Begin, Commit, Rollback (all sync and async)
+- Interface extends IDisposable for proper resource management
+- Added comprehensive XML documentation for all members
+- **Status**: IUnitOfWork interface complete with all transaction coordination methods. Build successful.
 
 ---
 
