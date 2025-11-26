@@ -373,12 +373,12 @@ Implement the Unit of Work pattern for coordinating repositories.
 Create comprehensive unit tests for UnitOfWork.
 
 **Tasks**:
-- [ ] Test repository creation and caching
-- [ ] Test SaveChanges
-- [ ] Test transaction commit
-- [ ] Test transaction rollback
-- [ ] Test disposal
-- [ ] Test multiple repositories in single UnitOfWork
+- [x] Test repository creation and caching
+- [x] Test SaveChanges
+- [x] Test transaction commit
+- [x] Test transaction rollback
+- [x] Test disposal
+- [x] Test multiple repositories in single UnitOfWork
 
 **Acceptance Criteria**:
 - All tests pass

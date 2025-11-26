@@ -5,7 +5,8 @@
       "Bash(gemini:*)",
       "Bash(dotnet build:*)",
       "Bash(dotnet test:*)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(Select-String -Pattern \"FAIL\" -Context 5,10)"
     ],
     "deny": [],
     "ask": []
