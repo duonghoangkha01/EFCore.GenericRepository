@@ -236,13 +236,13 @@ Implement the base class for read-only repository operations.
 Create comprehensive unit tests for RepositoryQueryBase.
 
 **Tasks**:
-- [ ] Test GetById, GetAll, Find methods
-- [ ] Test Include for eager loading
-- [ ] Test AsNoTracking
-- [ ] Test sorting methods (OrderBy, ThenBy)
-- [ ] Test pagination
-- [ ] Test soft delete filtering
-- [ ] Test edge cases (null, empty results)
+- [x] Test GetById, GetAll, Find methods
+- [x] Test Include for eager loading
+- [x] Test AsNoTracking
+- [x] Test sorting methods (OrderBy, ThenBy)
+- [x] Test pagination
+- [x] Test soft delete filtering
+- [x] Test edge cases (null, empty results)
 
 **Acceptance Criteria**:
 - All tests pass

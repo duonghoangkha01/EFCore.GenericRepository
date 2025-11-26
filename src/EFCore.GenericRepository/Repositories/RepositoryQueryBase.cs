@@ -20,99 +20,75 @@ namespace EFCore.GenericRepository.Repositories
         where T : EntityBase<K>
         where TContext : DbContext
     {
-        /// <summary>
-        /// The database context.
-        /// </summary>
         protected readonly TContext DbContext;
-        
-        /// <summary>
-        /// The queryable entity set.
-        /// </summary>
         protected IQueryable<T> Query;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RepositoryQueryBase{T, K, TContext}"/> class.
-        /// </summary>
-        /// <param name="dbContext">The database context.</param>
         protected RepositoryQueryBase(TContext dbContext)
         {
             DbContext = dbContext;
             Query = DbContext.Set<T>();
         }
 
-        /// <inheritdoc />
         public virtual T? GetById(K id)
         {
-            return Query.SingleOrDefault(e => EqualityComparer<K>.Default.Equals(e.Id, id));
+            return Query.SingleOrDefault(e => e.Id.Equals(id));
         }
 
-        /// <inheritdoc />
         public virtual async Task<T?> GetByIdAsync(K id, CancellationToken cancellationToken = default)
         {
-            return await Query.SingleOrDefaultAsync(e => EqualityComparer<K>.Default.Equals(e.Id, id), cancellationToken);
+            return await Query.SingleOrDefaultAsync(e => e.Id.Equals(id), cancellationToken);
         }
 
-        /// <inheritdoc />
         public virtual IEnumerable<T> GetAll()
         {
             return Query.ToList();
         }
 
-        /// <inheritdoc />
         public virtual async Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken = default)
         {
             return await Query.ToListAsync(cancellationToken);
         }
 
-        /// <inheritdoc />
         public virtual IEnumerable<T> Find(Expression<Func<T, bool>> predicate)
         {
             return Query.Where(predicate).ToList();
         }
 
-        /// <inheritdoc />
         public virtual async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default)
         {
             return await Query.Where(predicate).ToListAsync(cancellationToken);
         }
 
-        /// <inheritdoc />
         public virtual T? FindSingle(Expression<Func<T, bool>> predicate)
         {
             return Query.SingleOrDefault(predicate);
         }
 
-        /// <inheritdoc />
         public virtual async Task<T?> FindSingleAsync(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default)
         {
             return await Query.SingleOrDefaultAsync(predicate, cancellationToken);
         }
 
-        /// <inheritdoc />
         public virtual bool Any(Expression<Func<T, bool>> predicate)
         {
             return Query.Any(predicate);
         }
 
-        /// <inheritdoc />
         public virtual async Task<bool> AnyAsync(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default)
         {
             return await Query.AnyAsync(predicate, cancellationToken);
         }
 
-        /// <inheritdoc />
         public virtual int Count(Expression<Func<T, bool>>? predicate = null)
         {
             return predicate == null ? Query.Count() : Query.Count(predicate);
         }
 
-        /// <inheritdoc />
         public virtual async Task<int> CountAsync(Expression<Func<T, bool>>? predicate = null, CancellationToken cancellationToken = default)
         {
             return predicate == null ? await Query.CountAsync(cancellationToken) : await Query.CountAsync(predicate, cancellationToken);
         }
 
-        /// <inheritdoc />
         public virtual PagedResult<T> GetPaged(int pageNumber, int pageSize)
         {
             var totalCount = Query.Count();
@@ -127,7 +103,6 @@ namespace EFCore.GenericRepository.Repositories
             };
         }
 
-        /// <inheritdoc />
         public virtual async Task<PagedResult<T>> GetPagedAsync(int pageNumber, int pageSize, CancellationToken cancellationToken = default)
         {
             var totalCount = await Query.CountAsync(cancellationToken);
@@ -142,35 +117,30 @@ namespace EFCore.GenericRepository.Repositories
             };
         }
 
-        /// <inheritdoc />
         public virtual IRepositoryQueryBase<T, K, TContext> Include(Expression<Func<T, object>> includeExpression)
         {
             Query = Query.Include(includeExpression);
             return this;
         }
 
-        /// <inheritdoc />
         public virtual IRepositoryQueryBase<T, K, TContext> AsNoTracking()
         {
             Query = Query.AsNoTracking();
             return this;
         }
 
-        /// <inheritdoc />
         public virtual IRepositoryQueryBase<T, K, TContext> OrderBy(Expression<Func<T, object>> keySelector)
         {
             Query = Query.OrderBy(keySelector);
             return this;
         }
 
-        /// <inheritdoc />
         public virtual IRepositoryQueryBase<T, K, TContext> OrderByDescending(Expression<Func<T, object>> keySelector)
         {
             Query = Query.OrderByDescending(keySelector);
             return this;
         }
 
-        /// <inheritdoc />
         public virtual IRepositoryQueryBase<T, K, TContext> ThenBy(Expression<Func<T, object>> keySelector)
         {
             if (Query is IOrderedQueryable<T> orderedQuery)
@@ -186,7 +156,6 @@ namespace EFCore.GenericRepository.Repositories
             return this;
         }
 
-        /// <inheritdoc />
         public virtual IRepositoryQueryBase<T, K, TContext> ThenByDescending(Expression<Func<T, object>> keySelector)
         {
             if (Query is IOrderedQueryable<T> orderedQuery)
