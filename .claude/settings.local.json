@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gemini models list:*)",
+      "Bash(gemini:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
