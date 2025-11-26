@@ -3,7 +3,8 @@
     "allow": [
       "Bash(gemini models list:*)",
       "Bash(gemini:*)",
-      "Bash(dotnet build:*)"
+      "Bash(dotnet build:*)",
+      "Bash(dotnet test:*)"
     ],
     "deny": [],
     "ask": []

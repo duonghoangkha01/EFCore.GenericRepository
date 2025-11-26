@@ -5,9 +5,9 @@ using EFCore.GenericRepository.Tests.Fixtures;
 namespace EFCore.GenericRepository.Tests.Repositories
 {
     /// <summary>
-    /// Test repository for SoftDeletableProduct entity.
+    /// Test repository for SoftDeletableProduct entity with full CRUD operations.
     /// </summary>
-    public class SoftDeletableProductRepository : RepositoryQueryBase<SoftDeletableProduct, int, TestDbContext>
+    public class SoftDeletableProductRepository : RepositoryBase<SoftDeletableProduct, int, TestDbContext>
     {
         public SoftDeletableProductRepository(TestDbContext dbContext) : base(dbContext)
         {

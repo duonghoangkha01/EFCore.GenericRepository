@@ -306,13 +306,13 @@ Implement the complete repository with CRUD operations.
 Create comprehensive unit tests for CRUD operations.
 
 **Tasks**:
-- [ ] Test Add/AddRange
-- [ ] Test Update/UpdateRange
-- [ ] Test Delete (soft delete for ISoftDeletable)
-- [ ] Test Delete (hard delete for non-ISoftDeletable)
-- [ ] Test HardDelete
-- [ ] Test Restore
-- [ ] Test edge cases
+- [x] Test Add/AddRange
+- [x] Test Update/UpdateRange
+- [x] Test Delete (soft delete for ISoftDeletable)
+- [x] Test Delete (hard delete for non-ISoftDeletable)
+- [x] Test HardDelete
+- [x] Test Restore
+- [x] Test edge cases
 
 **Acceptance Criteria**:
 - All tests pass
