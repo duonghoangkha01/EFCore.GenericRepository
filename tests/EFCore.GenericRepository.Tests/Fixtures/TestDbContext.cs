@@ -1,3 +1,4 @@
+using EFCore.GenericRepository.Extensions;
 using EFCore.GenericRepository.Tests.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -30,9 +31,8 @@ namespace EFCore.GenericRepository.Tests.Fixtures
                 .WithMany(u => u.Posts)
                 .HasForeignKey(p => p.UserId);
 
-            // Configure soft delete global query filter for SoftDeletableProduct
-            modelBuilder.Entity<SoftDeletableProduct>()
-                .HasQueryFilter(p => !p.IsDeleted);
+            // Configure soft delete global query filter for all ISoftDeletable entities
+            modelBuilder.ConfigureSoftDelete();
         }
     }
 }

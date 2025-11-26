@@ -396,11 +396,11 @@ Create comprehensive unit tests for UnitOfWork.
 Create extension methods for configuring soft delete in DbContext.
 
 **Tasks**:
-- [ ] Create DbContextExtensions class
-- [ ] Implement ConfigureSoftDelete method
-- [ ] Apply global query filter for ISoftDeletable entities
-- [ ] Add comprehensive XML documentation
-- [ ] Create unit/integration tests
+- [x] Create DbContextExtensions class
+- [x] Implement ConfigureSoftDelete method
+- [x] Apply global query filter for ISoftDeletable entities
+- [x] Add comprehensive XML documentation
+- [x] Create unit/integration tests
 
 **Acceptance Criteria**:
 - Global query filter works

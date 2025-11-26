@@ -14,7 +14,7 @@
 
 **Last Updated**: 2025-11-26
 **Current Status**: 🟢 **IN PROGRESS** - Core implementation in progress
-**Overall Progress**: 50% (16/32 issues completed)
+**Overall Progress**: 53.125% (17/32 issues completed)
 
 ### ✅ Completed Tasks
 - [x] Create detailed implementation plan
@@ -24,10 +24,10 @@
 - [x] Create GitHub Issues task list
 
 ### 🔄 Current Task
-**Task**: Implementing Issue #17: Implement DbContextExtensions for soft delete
+**Task**: Implementing Issue #18: Implement ServiceCollectionExtensions for DI
 **Status**: Ready to start
 **Blockers**: None
-**Next Action**: Create extension methods for configuring soft delete global query filters in DbContext
+**Next Action**: Create extension methods for dependency injection registration of repositories and UnitOfWork
 
 ### 📋 Next Steps (In Order)
 1. [x] Create GitHub repository: `EFCore.GenericRepository`
@@ -123,6 +123,15 @@
 - Configured InMemoryDatabase to suppress transaction warnings using ConfigureWarnings
 - Documented InMemory database limitations for rollback tests (3 tests skipped with clear explanation)
 - **Status**: All tests passing (23/23 executed, 3 skipped). UnitOfWork fully tested with excellent coverage. Ready for Extensions phase.
+
+#### Session 14 - 2025-11-26 - DbContext Extensions for Soft Delete
+- Completed Issue #17: Implement DbContextExtensions for soft delete
+- Created `src/EFCore.GenericRepository/Extensions/DbContextExtensions.cs` with ConfigureSoftDelete method
+- Implemented automatic global query filter application for all ISoftDeletable entities using reflection and expression trees
+- Updated TestDbContext to use ConfigureSoftDelete extension method
+- Created `tests/EFCore.GenericRepository.Tests/Extensions/DbContextExtensionsTests.cs` (7 test methods)
+- Test coverage includes: automatic filtering, IgnoreQueryFilters bypass, non-soft-deletable entities, Where clauses, Count operations, Find behavior
+- **Status**: All tests passing (7/7). Global query filters working perfectly. Soft-deleted entities automatically filtered from queries.
 
 ---
 
