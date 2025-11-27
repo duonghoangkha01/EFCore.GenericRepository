@@ -417,10 +417,10 @@ Create extension methods for configuring soft delete in DbContext.
 Create extension methods for dependency injection registration.
 
 **Tasks**:
-- [ ] Create ServiceCollectionExtensions class
-- [ ] Implement AddGenericRepository<TContext>() method
-- [ ] Add overload with DbContext configuration
-- [ ] Add comprehensive XML documentation
+- [x] Create ServiceCollectionExtensions class
+- [x] Implement AddGenericRepository<TContext>() method
+- [x] Add overload with DbContext configuration
+- [x] Add comprehensive XML documentation
 
 **Acceptance Criteria**:
 - DI registration works correctly

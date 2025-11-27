@@ -12,9 +12,9 @@
 
 ## 📊 PROJECT STATUS & PROGRESS TRACKING
 
-**Last Updated**: 2025-11-26
+**Last Updated**: 2025-11-27
 **Current Status**: 🟢 **IN PROGRESS** - Core implementation in progress
-**Overall Progress**: 53.125% (17/32 issues completed)
+**Overall Progress**: 56.25% (18/32 issues completed)
 
 ### ✅ Completed Tasks
 - [x] Create detailed implementation plan
@@ -24,10 +24,10 @@
 - [x] Create GitHub Issues task list
 
 ### 🔄 Current Task
-**Task**: Implementing Issue #18: Implement ServiceCollectionExtensions for DI
+**Task**: Implementing Issue #19: Create sample console application
 **Status**: Ready to start
 **Blockers**: None
-**Next Action**: Create extension methods for dependency injection registration of repositories and UnitOfWork
+**Next Action**: Set up console sample demonstrating repository and UnitOfWork usage
 
 ### 📋 Next Steps (In Order)
 1. [x] Create GitHub repository: `EFCore.GenericRepository`
@@ -132,6 +132,13 @@
 - Created `tests/EFCore.GenericRepository.Tests/Extensions/DbContextExtensionsTests.cs` (7 test methods)
 - Test coverage includes: automatic filtering, IgnoreQueryFilters bypass, non-soft-deletable entities, Where clauses, Count operations, Find behavior
 - **Status**: All tests passing (7/7). Global query filters working perfectly. Soft-deleted entities automatically filtered from queries.
+
+#### Session 15 - 2025-11-27 - DI Extensions
+- Completed Issue #18: Implement ServiceCollectionExtensions for DI
+- Updated AddGenericRepository overloads to remove ambiguous optional parameters, enforce required DbContext configuration when provided, and add argument validation
+- Added UnitOfWork registration helper to keep lifetimes aligned with DbContext registration
+- Added `tests/EFCore.GenericRepository.Tests/Extensions/ServiceCollectionExtensionsTests.cs` covering DbContext and UnitOfWork registration, lifetimes, and null argument handling
+- **Status**: All tests passing (130 total, 3 skipped by design). Extensions phase complete; moving to sample applications next.
 
 ---
 
