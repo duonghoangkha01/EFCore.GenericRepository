@@ -152,7 +152,7 @@ public interface ISoftDeletable
     /// <summary>
     /// Gets or sets the date and time when this entity was soft deleted.
     /// </summary>
-    DateTime? DeletedAt { get; set; }
+    DateTimeOffset? DeletedAt { get; set; }
 }
 ```
 
@@ -438,13 +438,13 @@ Create extension methods for dependency injection registration.
 Create a sample console app demonstrating library usage.
 
 **Tasks**:
-- [ ] Create console project
-- [ ] Define sample entities (Product, Category)
-- [ ] Create sample DbContext
-- [ ] Demonstrate CRUD operations
-- [ ] Demonstrate pagination and sorting
-- [ ] Demonstrate soft delete and restore
-- [ ] Add comprehensive comments
+- [x] Create console project
+- [x] Define sample entities (Product, Category)
+- [x] Create sample DbContext
+- [x] Demonstrate CRUD operations
+- [x] Demonstrate pagination and sorting
+- [x] Demonstrate soft delete and restore
+- [x] Add comprehensive comments
 
 **Acceptance Criteria**:
 - Sample runs successfully

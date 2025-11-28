@@ -584,9 +584,7 @@ namespace EFCore.GenericRepository.Tests.Repositories
             SeedData();
 
             // Act & Assert
-            var exception = Assert.Throws<InvalidOperationException>(() =>
-                _sut.ThenBy(u => u.Name).GetAll().ToList()
-            );
+            var exception = Assert.Throws<InvalidOperationException>(() => _sut.ThenBy(u => u.Name).GetAll().ToList());
             Assert.Contains("ThenBy can only be applied to a sorted query", exception.Message);
         }
 
@@ -597,9 +595,7 @@ namespace EFCore.GenericRepository.Tests.Repositories
             SeedData();
 
             // Act & Assert
-            var exception = Assert.Throws<InvalidOperationException>(() =>
-                _sut.ThenByDescending(u => u.Name).GetAll().ToList()
-            );
+            var exception = Assert.Throws<InvalidOperationException>(() => _sut.ThenByDescending(u => u.Name).GetAll().ToList());
             Assert.Contains("ThenByDescending can only be applied to a sorted query", exception.Message);
         }
 
@@ -712,7 +708,7 @@ namespace EFCore.GenericRepository.Tests.Repositories
             Assert.Equal("Bob", users[1].Name);
             Assert.Equal("Charlie", users[2].Name);
             Assert.NotNull(users[0].Role);
-            Assert.Equal("Admin", users[0].Role.Name);
+            Assert.Equal("Admin", users[0].Role!.Name);
             Assert.Empty(_dbContext.ChangeTracker.Entries());
         }
 

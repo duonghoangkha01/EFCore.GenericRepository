@@ -70,25 +70,52 @@ namespace EFCore.GenericRepository.Extensions
         /// </summary>
         /// <typeparam name="TContext">The DbContext type.</typeparam>
         /// <param name="services">The service collection.</param>
-        /// <param name="lifetime">The lifetime for the Unit of Work. Defaults to Scoped (should match DbContext lifetime).</param>
         /// <returns>The service collection for method chaining.</returns>
         /// <remarks>
         /// Use this overload when your DbContext is already registered in the service collection.
-        /// The Unit of Work will resolve the existing DbContext instance.
+        /// This method registers the <see cref="IUnitOfWork{TContext}"/> with a scoped lifetime.
         /// <example>
         /// <code>
         /// // First register DbContext separately
         /// services.AddDbContext&lt;MyDbContext&gt;(options =>
         ///     options.UseSqlServer(connectionString));
         ///
-        /// // Then register the repository pattern
+        /// // Then register the repository pattern with a scoped lifetime
         /// services.AddGenericRepository&lt;MyDbContext&gt;();
         /// </code>
         /// </example>
         /// </remarks>
         public static IServiceCollection AddGenericRepository<TContext>(
+            this IServiceCollection services)
+            where TContext : DbContext
+        {
+            return services.AddGenericRepository<TContext>(ServiceLifetime.Scoped);
+        }
+        
+        /// <summary>
+        /// Registers the generic repository pattern services for an already registered DbContext.
+        /// </summary>
+        /// <typeparam name="TContext">The DbContext type.</typeparam>
+        /// <param name="services">The service collection.</param>
+        /// <param name="lifetime">The lifetime for the Unit of Work (should match DbContext lifetime).</param>
+        /// <returns>The service collection for method chaining.</returns>
+        /// <remarks>
+        /// Use this overload when your DbContext is already registered in the service collection
+        /// and you want to specify a lifetime other than Scoped.
+        /// <example>
+        /// <code>
+        /// // First register DbContext separately
+        /// services.AddDbContext&lt;MyDbContext&gt;(options =>
+        ///     options.UseSqlServer(connectionString), ServiceLifetime.Transient);
+        ///
+        /// // Then register the repository pattern with a matching lifetime
+        /// services.AddGenericRepository&lt;MyDbContext&gt;(ServiceLifetime.Transient);
+        /// </code>
+        /// </example>
+        /// </remarks>
+        public static IServiceCollection AddGenericRepository<TContext>(
             this IServiceCollection services,
-            ServiceLifetime lifetime = ServiceLifetime.Scoped)
+            ServiceLifetime lifetime)
             where TContext : DbContext
         {
             if (services is null)

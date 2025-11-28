@@ -13,8 +13,8 @@
 ## 📊 PROJECT STATUS & PROGRESS TRACKING
 
 **Last Updated**: 2025-11-27
-**Current Status**: 🟢 **IN PROGRESS** - Core implementation in progress
-**Overall Progress**: 56.25% (18/32 issues completed)
+**Current Status**: 🟢 **IN PROGRESS** - Sample applications in progress
+**Overall Progress**: 59.38% (19/32 issues completed)
 
 ### ✅ Completed Tasks
 - [x] Create detailed implementation plan
@@ -24,10 +24,10 @@
 - [x] Create GitHub Issues task list
 
 ### 🔄 Current Task
-**Task**: Implementing Issue #19: Create sample console application
+**Task**: Implementing Issue #20: Create sample ASP.NET Core Web API project
 **Status**: Ready to start
 **Blockers**: None
-**Next Action**: Set up console sample demonstrating repository and UnitOfWork usage
+**Next Action**: Set up a new Web API project in the samples folder.
 
 ### 📋 Next Steps (In Order)
 1. [x] Create GitHub repository: `EFCore.GenericRepository`
@@ -140,12 +140,21 @@
 - Added `tests/EFCore.GenericRepository.Tests/Extensions/ServiceCollectionExtensionsTests.cs` covering DbContext and UnitOfWork registration, lifetimes, and null argument handling
 - **Status**: All tests passing (130 total, 3 skipped by design). Extensions phase complete; moving to sample applications next.
 
+#### Session 16 - 2025-11-27 - Sample Console Application
+- Completed Issue #19: Create sample console application
+- Created `samples/EFCore.GenericRepository.Sample` project.
+- Defined `Product` and `Category` entities, and a `SampleDbContext`.
+- Implemented a full demonstration of library features in `Program.cs`, including DI setup, data seeding, CRUD operations, querying, sorting, pagination, soft delete, and restore.
+- Added comprehensive comments to explain the sample code.
+- Successfully ran the sample application, verifying all features work end-to-end.
+- **Status**: Console sample complete. Project is ready for the Web API sample.
+
 ---
 
 ## 🎯 Quick Reference for New Sessions
 
 ### What's Been Decided
-- **Target Framework**: .NET 6
+- **Target Framework**: .NET 8
 - **EF Core Version**: 8.0
 - **Package Name**: EFCore.GenericRepository
 - **Repository**: Public on GitHub
@@ -208,16 +217,14 @@ Create a reusable .NET library providing generic repository pattern implementati
 ## 2. Architecture Decisions
 
 ### 2.1 Framework Target
-**DECISION: .NET 6 + EF Core 8.0** ✓
+**DECISION: .NET 8 + EF Core 8.0** ✓
 
 Chosen for modern features with good compatibility:
-- Works with .NET 6, .NET 7, .NET 8+
-- Long-term support (LTS) - .NET 6 supported until November 2024
+- Works with .NET 8+
 - Latest EF Core 8.0 features and performance improvements
-- Modern C# language features (C# 10+)
-- Still broadly compatible with current .NET ecosystem
+- Modern C# language features (C# 12+)
 
-**Target Framework**: `net6.0`
+**Target Framework**: `net8.0`
 **EF Core Version**: `8.0.0` (latest stable)
 
 ### 2.2 Project Naming
@@ -308,7 +315,7 @@ public abstract class EntityBase<K>
 public interface ISoftDeletable
 {
     bool IsDeleted { get; set; }
-    DateTime? DeletedAt { get; set; }
+    DateTimeOffset? DeletedAt { get; set; }
 }
 ```
 
@@ -1101,7 +1108,7 @@ public class Product : EntityBase<int>, ISoftDeletable
     public string Name { get; set; }
     public decimal Price { get; set; }
     public bool IsDeleted { get; set; }
-    public DateTime? DeletedAt { get; set; }
+    public DateTimeOffset? DeletedAt { get; set; }
 }
 
 public class Category : EntityBase<Guid>

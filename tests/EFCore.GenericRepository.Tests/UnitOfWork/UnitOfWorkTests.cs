@@ -385,6 +385,9 @@ namespace EFCore.GenericRepository.Tests.UnitOfWork
             var updatedPost = await _context.Posts.FindAsync(post.Id);
             var updatedProduct = await _context.Products.FindAsync(product.Id);
 
+            Assert.NotNull(updatedPost);
+            Assert.NotNull(updatedProduct);
+
             Assert.Equal("Updated CRUD Post", updatedPost.Title);
             Assert.Equal(24.99m, updatedProduct.Price);
         }
@@ -494,7 +497,7 @@ namespace EFCore.GenericRepository.Tests.UnitOfWork
         {
             // Act & Assert
             var exception = Assert.Throws<ArgumentNullException>(() =>
-                new UnitOfWork<TestDbContext>(null));
+                new UnitOfWork<TestDbContext>(null!));
 
             Assert.Equal("context", exception.ParamName);
         }

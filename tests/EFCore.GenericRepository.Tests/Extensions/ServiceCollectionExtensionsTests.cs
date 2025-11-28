@@ -86,6 +86,22 @@ namespace EFCore.GenericRepository.Tests.Extensions
         }
 
         [Fact]
+        public void AddGenericRepository_Parameterless_DefaultsToScopedLifetime()
+        {
+            // Arrange
+            var services = new ServiceCollection();
+            var databaseName = Guid.NewGuid().ToString();
+            services.AddDbContext<TestDbContext>(options => options.UseInMemoryDatabase(databaseName));
+
+            // Act
+            services.AddGenericRepository<TestDbContext>();
+
+            // Assert
+            var unitOfWorkDescriptor = services.First(descriptor => descriptor.ServiceType == typeof(IUnitOfWork<TestDbContext>));
+            Assert.Equal(ServiceLifetime.Scoped, unitOfWorkDescriptor.Lifetime);
+        }
+
+        [Fact]
         public void AddGenericRepository_ShouldThrowWhenServicesIsNull_ForOptionsOverload()
         {
             // Arrange
