@@ -50,8 +50,10 @@ namespace EFCore.GenericRepository.UnitOfWork
             }
 
             // Create new repository instance
-            // We create a concrete RepositoryBase<T, K, TContext> instance
-            // This uses an anonymous implementation since RepositoryBase is abstract
+            // We create a concrete RepositoryBase<T, K, TContext> instance which implements:
+            // - IRepositoryBase<T, K, TContext> (unified interface - returned to caller)
+            // - IRepositoryBase<T, K> (context-independent CRUD - inherited)
+            // - IRepositoryQueryBase<T, K, TContext> (fluent queries - inherited)
             var repository = new RepositoryImplementation<T, K, TContext>(_context);
 
             // Cache the repository

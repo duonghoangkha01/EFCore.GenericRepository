@@ -16,6 +16,20 @@ namespace EFCore.GenericRepository.Repositories
     /// <typeparam name="T">The entity type.</typeparam>
     /// <typeparam name="K">The entity's primary key type.</typeparam>
     /// <typeparam name="TContext">The DbContext type.</typeparam>
+    /// <remarks>
+    /// <para>
+    /// This class implements:
+    /// </para>
+    /// <list type="bullet">
+    /// <item><description><see cref="IRepositoryBase{T, K, TContext}"/> - Unified interface with all operations</description></item>
+    /// <item><description><see cref="IRepositoryBase{T, K}"/> - Context-independent CRUD operations</description></item>
+    /// <item><description><see cref="IRepositoryQueryBase{T, K, TContext}"/> - EF Core-specific fluent queries</description></item>
+    /// </list>
+    /// <para>
+    /// The unified <see cref="IRepositoryBase{T, K, TContext}"/> interface combines both command operations
+    /// (Add, Update, Delete) and query building (Include, OrderBy, AsNoTracking) for convenience.
+    /// </para>
+    /// </remarks>
     public abstract class RepositoryBase<T, K, TContext> : RepositoryQueryBase<T, K, TContext>, IRepositoryBase<T, K, TContext>
         where T : EntityBase<K>
         where TContext : DbContext

@@ -12,9 +12,9 @@
 
 ## 📊 PROJECT STATUS & PROGRESS TRACKING
 
-**Last Updated**: 2025-11-27
-**Current Status**: 🟢 **IN PROGRESS** - Sample applications in progress
-**Overall Progress**: 59.38% (19/32 issues completed)
+**Last Updated**: 2025-11-28
+**Current Status**: 🟡 **PLANNING** - Preparing for Issue #33 refactoring
+**Overall Progress**: 57.58% (19/33 issues completed)
 
 ### ✅ Completed Tasks
 - [x] Create detailed implementation plan
@@ -22,12 +22,18 @@
 - [x] Add versioning and publishing strategy
 - [x] Add GitHub repository and task management section
 - [x] Create GitHub Issues task list
+- [x] Complete core implementation (Issues #1-19)
 
 ### 🔄 Current Task
-**Task**: Implementing Issue #20: Create sample ASP.NET Core Web API project
-**Status**: Ready to start
+**Task**: Issue #33: Refactor repository interfaces to create hierarchical structure
+**Status**: Planning complete, ready to implement
 **Blockers**: None
-**Next Action**: Set up a new Web API project in the samples folder.
+**Priority**: High (architectural improvement, should be done before additional samples)
+**Next Action**: Begin implementing new context-independent interfaces
+**Detailed Plan**: See REFACTORING-PLAN-ISSUE-33.md
+
+### 📋 Deferred Tasks
+- **Issue #20**: Create sample ASP.NET Core Web API project (deferred until after refactoring)
 
 ### 📋 Next Steps (In Order)
 1. [x] Create GitHub repository: `EFCore.GenericRepository`
@@ -148,6 +154,20 @@
 - Added comprehensive comments to explain the sample code.
 - Successfully ran the sample application, verifying all features work end-to-end.
 - **Status**: Console sample complete. Project is ready for the Web API sample.
+
+#### Session 17 - 2025-11-28 - Planning Issue #33: Repository Interface Refactoring
+- Created Issue #33: Refactor repository interfaces to create hierarchical structure
+- Developed comprehensive refactoring plan in `REFACTORING-PLAN-ISSUE-33.md`
+- **Architecture Change**: Introducing context-independent base interfaces
+  - New: `IRepositoryQueryBase<T, K>` (without TContext)
+  - New: `IRepositoryBase<T, K>` (without TContext)
+  - Updated: `IRepositoryQueryBase<T, K, TContext>` (inherits from base)
+  - Updated: `IRepositoryBase<T, K, TContext>` (inherits from base)
+- **Benefits**: Cleaner separation of concerns, better DI flexibility, SOLID principles, foundation for non-EF implementations
+- **Migration Impact**: Non-breaking change - all existing code continues to work
+- Updated GitHub-Issues.md with Issue #33 details
+- Updated PLAN.md to reflect new priority (Issue #33 before Issue #20)
+- **Status**: Planning complete, ready to begin implementation. Estimated effort: 6-9 hours.
 
 ---
 

@@ -1,21 +1,35 @@
 using EFCore.GenericRepository.Entities;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
+using System;
 
 namespace EFCore.GenericRepository.Repositories.Interfaces
 {
     /// <summary>
-    /// Represents the base interface for repository operations with full CRUD support.
-    /// Extends <see cref="IRepositoryQueryBase{T, K, TContext}"/> with write operations.
+    /// Base interface for CRUD operations and simple queries, without DbContext dependency.
+    /// For complex,fluent queries with Include, AsNoTracking, and OrderBy, use <see cref="IRepositoryQueryBase{T, K, TContext}"/>.
     /// </summary>
     /// <typeparam name="T">The entity type.</typeparam>
     /// <typeparam name="K">The entity's primary key type.</typeparam>
-    /// <typeparam name="TContext">The DbContext type.</typeparam>
-    public interface IRepositoryBase<T, K, TContext> : IRepositoryQueryBase<T, K, TContext>
+    /// <remarks>
+    /// <para>
+    /// This interface provides a context-independent contract for repository operations, making it ideal for:
+    /// </para>
+    /// <list type="bullet">
+    /// <item><description>Unit testing with mock repositories</description></item>
+    /// <item><description>Services that don't need EF Core-specific features</description></item>
+    /// <item><description>Potential future implementations with other data access technologies</description></item>
+    /// </list>
+    /// <para>
+    /// The interface includes simple query methods (GetById, GetAll, Find) for convenience,
+    /// even though they overlap with <see cref="IRepositoryQueryBase{T, K}"/>.
+    /// This allows services to depend on a single interface for both queries and commands.
+    /// </para>
+    /// </remarks>
+    public interface IRepositoryBase<T, K> : IRepositoryQueryBase<T, K>
         where T : EntityBase<K>
-        where TContext : DbContext
     {
         #region Add Operations
 
@@ -26,8 +40,8 @@ namespace EFCore.GenericRepository.Repositories.Interfaces
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
         /// <returns>The added entity.</returns>
         /// <remarks>
-        /// This method does not save changes to the database. Call <see cref="DbContext.SaveChanges"/> or
-        /// <see cref="DbContext.SaveChangesAsync"/> to persist changes.
+        /// This method does not save changes to the database. Call SaveChanges or SaveChangesAsync
+        /// on the Unit of Work to persist changes.
         /// </remarks>
         Task<T> AddAsync(T entity, CancellationToken cancellationToken = default);
 
@@ -37,7 +51,7 @@ namespace EFCore.GenericRepository.Repositories.Interfaces
         /// <param name="entity">The entity to add.</param>
         /// <returns>The added entity.</returns>
         /// <remarks>
-        /// This method does not save changes to the database. Call <see cref="DbContext.SaveChanges"/> to persist changes.
+        /// This method does not save changes to the database. Call SaveChanges on the Unit of Work to persist changes.
         /// </remarks>
         T Add(T entity);
 
@@ -48,8 +62,7 @@ namespace EFCore.GenericRepository.Repositories.Interfaces
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> to observe while waiting for the task to complete.</param>
         /// <returns>A task representing the asynchronous operation.</returns>
         /// <remarks>
-        /// This method does not save changes to the database. Call <see cref="DbContext.SaveChanges"/> or
-        /// <see cref="DbContext.SaveChangesAsync"/> to persist changes.
+        /// This method does not save changes to the database. Call SaveChangesAsync on the Unit of Work to persist changes.
         /// </remarks>
         Task AddRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default);
 
@@ -58,7 +71,7 @@ namespace EFCore.GenericRepository.Repositories.Interfaces
         /// </summary>
         /// <param name="entities">The entities to add.</param>
         /// <remarks>
-        /// This method does not save changes to the database. Call <see cref="DbContext.SaveChanges"/> to persist changes.
+        /// This method does not save changes to the database. Call SaveChanges on the Unit of Work to persist changes.
         /// </remarks>
         void AddRange(IEnumerable<T> entities);
 
@@ -72,8 +85,8 @@ namespace EFCore.GenericRepository.Repositories.Interfaces
         /// <param name="entity">The entity to update.</param>
         /// <returns>The updated entity.</returns>
         /// <remarks>
-        /// This method marks the entity as modified in the change tracker. Call <see cref="DbContext.SaveChanges"/>
-        /// or <see cref="DbContext.SaveChangesAsync"/> to persist changes.
+        /// This method marks the entity as modified in the change tracker. Call SaveChanges or SaveChangesAsync
+        /// on the Unit of Work to persist changes.
         /// </remarks>
         T Update(T entity);
 
@@ -82,8 +95,8 @@ namespace EFCore.GenericRepository.Repositories.Interfaces
         /// </summary>
         /// <param name="entities">The entities to update.</param>
         /// <remarks>
-        /// This method marks the entities as modified in the change tracker. Call <see cref="DbContext.SaveChanges"/>
-        /// or <see cref="DbContext.SaveChangesAsync"/> to persist changes.
+        /// This method marks the entities as modified in the change tracker. Call SaveChanges or SaveChangesAsync
+        /// on the Unit of Work to persist changes.
         /// </remarks>
         void UpdateRange(IEnumerable<T> entities);
 
@@ -100,7 +113,7 @@ namespace EFCore.GenericRepository.Repositories.Interfaces
         /// <remarks>
         /// <para>If the entity implements <see cref="ISoftDeletable"/>, it will be soft deleted (marked as deleted but not removed from database).</para>
         /// <para>Otherwise, the entity will be permanently removed from the database.</para>
-        /// <para>Call <see cref="DbContext.SaveChanges"/> or <see cref="DbContext.SaveChangesAsync"/> to persist changes.</para>
+        /// <para>Call SaveChanges or SaveChangesAsync on the Unit of Work to persist changes.</para>
         /// </remarks>
         Task DeleteAsync(K id, CancellationToken cancellationToken = default);
 
@@ -111,7 +124,7 @@ namespace EFCore.GenericRepository.Repositories.Interfaces
         /// <remarks>
         /// <para>If the entity implements <see cref="ISoftDeletable"/>, it will be soft deleted (marked as deleted but not removed from database).</para>
         /// <para>Otherwise, the entity will be permanently removed from the database.</para>
-        /// <para>Call <see cref="DbContext.SaveChanges"/> to persist changes.</para>
+        /// <para>Call SaveChanges on the Unit of Work to persist changes.</para>
         /// </remarks>
         void Delete(K id);
 
@@ -122,7 +135,7 @@ namespace EFCore.GenericRepository.Repositories.Interfaces
         /// <remarks>
         /// <para>If the entity implements <see cref="ISoftDeletable"/>, it will be soft deleted (marked as deleted but not removed from database).</para>
         /// <para>Otherwise, the entity will be permanently removed from the database.</para>
-        /// <para>Call <see cref="DbContext.SaveChanges"/> or <see cref="DbContext.SaveChangesAsync"/> to persist changes.</para>
+        /// <para>Call SaveChanges or SaveChangesAsync on the Unit of Work to persist changes.</para>
         /// </remarks>
         void Delete(T entity);
 
@@ -135,7 +148,7 @@ namespace EFCore.GenericRepository.Repositories.Interfaces
         /// <remarks>
         /// <para>If entities implement <see cref="ISoftDeletable"/>, they will be soft deleted (marked as deleted but not removed from database).</para>
         /// <para>Otherwise, entities will be permanently removed from the database.</para>
-        /// <para>Call <see cref="DbContext.SaveChanges"/> or <see cref="DbContext.SaveChangesAsync"/> to persist changes.</para>
+        /// <para>Call SaveChanges or SaveChangesAsync on the Unit of Work to persist changes.</para>
         /// </remarks>
         Task DeleteRangeAsync(IEnumerable<K> ids, CancellationToken cancellationToken = default);
 
@@ -146,7 +159,7 @@ namespace EFCore.GenericRepository.Repositories.Interfaces
         /// <remarks>
         /// <para>If entities implement <see cref="ISoftDeletable"/>, they will be soft deleted (marked as deleted but not removed from database).</para>
         /// <para>Otherwise, entities will be permanently removed from the database.</para>
-        /// <para>Call <see cref="DbContext.SaveChanges"/> to persist changes.</para>
+        /// <para>Call SaveChanges on the Unit of Work to persist changes.</para>
         /// </remarks>
         void DeleteRange(IEnumerable<K> ids);
 
@@ -157,7 +170,7 @@ namespace EFCore.GenericRepository.Repositories.Interfaces
         /// <remarks>
         /// <para>If entities implement <see cref="ISoftDeletable"/>, they will be soft deleted (marked as deleted but not removed from database).</para>
         /// <para>Otherwise, entities will be permanently removed from the database.</para>
-        /// <para>Call <see cref="DbContext.SaveChanges"/> or <see cref="DbContext.SaveChangesAsync"/> to persist changes.</para>
+        /// <para>Call SaveChanges or SaveChangesAsync on the Unit of Work to persist changes.</para>
         /// </remarks>
         void DeleteRange(IEnumerable<T> entities);
 
@@ -172,7 +185,7 @@ namespace EFCore.GenericRepository.Repositories.Interfaces
         /// <remarks>
         /// <para>This method forces permanent deletion even for entities implementing <see cref="ISoftDeletable"/>.</para>
         /// <para>Use with caution as this operation cannot be undone.</para>
-        /// <para>Call <see cref="DbContext.SaveChanges"/> or <see cref="DbContext.SaveChangesAsync"/> to persist changes.</para>
+        /// <para>Call SaveChanges or SaveChangesAsync on the Unit of Work to persist changes.</para>
         /// </remarks>
         void HardDelete(T entity);
 
@@ -183,7 +196,7 @@ namespace EFCore.GenericRepository.Repositories.Interfaces
         /// <remarks>
         /// <para>This method forces permanent deletion even for entities implementing <see cref="ISoftDeletable"/>.</para>
         /// <para>Use with caution as this operation cannot be undone.</para>
-        /// <para>Call <see cref="DbContext.SaveChanges"/> or <see cref="DbContext.SaveChangesAsync"/> to persist changes.</para>
+        /// <para>Call SaveChanges or SaveChangesAsync on the Unit of Work to persist changes.</para>
         /// </remarks>
         void HardDeleteRange(IEnumerable<T> entities);
 
@@ -200,20 +213,9 @@ namespace EFCore.GenericRepository.Repositories.Interfaces
         /// <remarks>
         /// <para>This method only works for entities implementing <see cref="ISoftDeletable"/>.</para>
         /// <para>If the entity does not implement <see cref="ISoftDeletable"/> or is not found, no action is taken.</para>
-        /// <para>Call <see cref="DbContext.SaveChanges"/> or <see cref="DbContext.SaveChangesAsync"/> to persist changes.</para>
+        /// <para>Call SaveChanges or SaveChangesAsync on the Unit of Work to persist changes.</para>
         /// </remarks>
         Task RestoreAsync(K id, CancellationToken cancellationToken = default);
-
-        /// <summary>
-        /// Restores a soft-deleted entity by its primary key.
-        /// </summary>
-        /// <param name="id">The primary key of the entity to restore.</param>
-        /// <remarks>
-        /// <para>This method only works for entities implementing <see cref="ISoftDeletable"/>.</para>
-        /// <para>If the entity does not implement <see cref="ISoftDeletable"/> or is not found, no action is taken.</para>
-        /// <para>Call <see cref="DbContext.SaveChanges"/> to persist changes.</para>
-        /// </remarks>
-        void Restore(K id);
 
         /// <summary>
         /// Restores a soft-deleted entity.
@@ -222,7 +224,7 @@ namespace EFCore.GenericRepository.Repositories.Interfaces
         /// <remarks>
         /// <para>This method only works for entities implementing <see cref="ISoftDeletable"/>.</para>
         /// <para>If the entity does not implement <see cref="ISoftDeletable"/>, no action is taken.</para>
-        /// <para>Call <see cref="DbContext.SaveChanges"/> or <see cref="DbContext.SaveChangesAsync"/> to persist changes.</para>
+        /// <para>Call SaveChanges or SaveChangesAsync on the Unit of Work to persist changes.</para>
         /// </remarks>
         void Restore(T entity);
 

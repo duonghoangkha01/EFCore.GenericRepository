@@ -31,8 +31,22 @@ namespace EFCore.GenericRepository.UnitOfWork
         /// <typeparam name="K">The entity's primary key type.</typeparam>
         /// <returns>A repository instance for the specified entity type.</returns>
         /// <remarks>
+        /// <para>
         /// This method uses lazy initialization and caching. Multiple calls with the same type parameters
         /// will return the same repository instance.
+        /// </para>
+        /// <para>
+        /// Returns the unified <see cref="IRepositoryBase{T, K, TContext}"/> interface, which provides:
+        /// </para>
+        /// <list type="bullet">
+        /// <item><description>All CRUD operations (Add, Update, Delete, Restore)</description></item>
+        /// <item><description>Simple query operations (GetById, GetAll, Find, Count, etc.)</description></item>
+        /// <item><description>EF Core-specific fluent query building (Include, OrderBy, AsNoTracking)</description></item>
+        /// </list>
+        /// <para>
+        /// The returned interface can be cast to <see cref="IRepositoryBase{T, K}"/> if you need
+        /// a context-independent interface for testing or abstraction purposes.
+        /// </para>
         /// </remarks>
         IRepositoryBase<T, K, TContext> Repository<T, K>() where T : EntityBase<K>;
 

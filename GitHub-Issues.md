@@ -714,3 +714,61 @@ Create GitHub Release for v1.0.0.
 - Release published
 - Release notes comprehensive
 - Artifacts attached
+
+---
+
+## Milestone: Refactoring & Improvements
+
+### Architecture Improvements
+
+#### Issue #33: Refactor repository interfaces to create hierarchical structure
+**Labels**: `refactoring`, `breaking-change`, `priority: high`
+
+**Description**:
+Refactor the repository interface hierarchy to separate context-independent interfaces from context-specific implementations. This creates a cleaner separation of concerns and allows for more flexible implementations.
+
+**Current Structure**:
+- `IRepositoryQueryBase<T, K, TContext>`
+- `IRepositoryBase<T, K, TContext> : IRepositoryQueryBase<T, K, TContext>`
+
+**New Structure**:
+- `IRepositoryQueryBase<T, K>` - Base query interface (context-independent)
+- `IRepositoryBase<T, K> : IRepositoryQueryBase<T, K>` - Base CRUD interface (context-independent)
+- `IRepositoryQueryBase<T, K, TContext> : IRepositoryQueryBase<T, K>` - Query with DbContext
+- `IRepositoryBase<T, K, TContext> : IRepositoryBase<T, K>` - Full CRUD with DbContext
+
+**Tasks**:
+- [ ] Create new context-independent interfaces: `IRepositoryQueryBase<T, K>` and `IRepositoryBase<T, K>`
+- [ ] Refactor existing interfaces to inherit from new base interfaces
+- [ ] Update `RepositoryQueryBase<T, K, TContext>` implementation
+- [ ] Update `RepositoryBase<T, K, TContext>` implementation
+- [ ] Update `IUnitOfWork` to use new interface hierarchy
+- [ ] Update `UnitOfWork<TContext>` implementation
+- [ ] Update all unit tests for repositories
+- [ ] Update all unit tests for UnitOfWork
+- [ ] Update sample console application
+- [ ] Update documentation and XML comments
+- [ ] Run full test suite to ensure no regressions
+
+**Acceptance Criteria**:
+- All interfaces follow new hierarchical structure
+- All implementations updated and working
+- All tests passing (130+ tests)
+- Sample applications updated and running
+- No breaking changes to public API usage patterns
+- XML documentation updated
+
+**Benefits**:
+- Cleaner separation of concerns
+- More flexible for dependency injection
+- Allows context-independent repository contracts
+- Better alignment with SOLID principles
+- Foundation for future non-EF implementations
+
+**Migration Impact**:
+- Internal refactoring - minimal impact on consumers
+- UnitOfWork usage remains the same
+- Extension methods remain the same
+- Existing code should continue to work
+
+---

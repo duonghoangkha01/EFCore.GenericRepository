@@ -6,7 +6,10 @@
       "Bash(dotnet build:*)",
       "Bash(dotnet test:*)",
       "Bash(cat:*)",
-      "Bash(Select-String -Pattern \"FAIL\" -Context 5,10)"
+      "Bash(Select-String -Pattern \"FAIL\" -Context 5,10)",
+      "Skill(gemini-subagent-skill)",
+      "Bash(dotnet run:*)",
+      "Bash(dir:*)"
     ],
     "deny": [],
     "ask": []

@@ -12,7 +12,7 @@ namespace EFCore.GenericRepository.Entities
         /// <summary>
         /// Gets or sets the items for the current page.
         /// </summary>
-        public IEnumerable<T> Items { get; set; } = new List<T>();
+        public IEnumerable<T> Items { get; set; } = [];
 
         /// <summary>
         /// Gets or sets the total number of items across all pages.

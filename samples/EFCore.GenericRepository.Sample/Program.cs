@@ -1,6 +1,7 @@
 using EFCore.GenericRepository.Sample.Entities;
 using EFCore.GenericRepository.Sample.Data;
 using EFCore.GenericRepository.UnitOfWork;
+using EFCore.GenericRepository.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -113,18 +114,27 @@ static async Task RunSampleAsync(IUnitOfWork<SampleDbContext> unitOfWork)
     }
     Console.WriteLine();
 
-    // **INCLUDE**: Eager load related entities (Categories)
-    Console.WriteLine("Getting all products including their categories...");
+    // **UNIFIED INTERFACE**: IRepositoryBase<Product, int, SampleDbContext>
+    // The repository now provides both CRUD operations AND fluent query building in one interface!
+
+    // **Simple Queries** - No casting needed!
+    Console.WriteLine("Simple query - counting products:");
+    var productCount = await productRepository.CountAsync();
+    Console.WriteLine($"Total products: {productCount}");
+    Console.WriteLine();
+
+    // **INCLUDE**: Eager load related entities (Categories) - Direct fluent usage!
+    Console.WriteLine("Getting all products including their categories (fluent query)...");
     var productsWithCategories = await productRepository
         .Include(p => p.Category)
         .GetAllAsync();
-        
+
     foreach (var p in productsWithCategories)
     {
-        Console.WriteLine($"- {p.Name} (Category: {p.Category.Name})");
+        Console.WriteLine($"- {p.Name} (Category: {p.Category?.Name ?? "No Category"})");
     }
     Console.WriteLine();
-    
+
     // **SORTING**: Get all products sorted by price descending
     Console.WriteLine("Getting all products sorted by price (descending)...");
     var sortedProducts = await productRepository
